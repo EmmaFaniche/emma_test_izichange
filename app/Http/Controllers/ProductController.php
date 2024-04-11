@@ -23,7 +23,7 @@ class ProductController extends Controller
         {
             $error= "Une erreur inattendue s'est produite." ;
             \Log::error($ex->getMessage());
-            return back()->with('error', $error);
+            return $error;
         }
     }
 
@@ -91,7 +91,7 @@ class ProductController extends Controller
                 return back()->with('error', $errors)->withInput();
             }
 
-            $product = Product::findorFail($id);
+            $product = Product::findOrFail($id);
             $requestData = $request->all();
             $dateUpdate = now();
 
