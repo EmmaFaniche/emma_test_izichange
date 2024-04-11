@@ -16,7 +16,7 @@ class ProductController extends Controller
         try
         {
             $int = 1;
-            $products = Product::all();
+            $products = Product::orderBy('id', 'desc')->get();
             return view('product.index', compact('products','int'));
         }
         catch(\Illuminate\Database\QueryException $ex)
@@ -38,11 +38,12 @@ class ProductController extends Controller
         {
             $validation=Validator::make($request->all(),[
             'name' => 'required|string|max:255',
-            'priceHt' => 'required|numeric',
+            'priceHt' => 'required|numeric|min:0',
             ]);
 
             if($validation->fails())
             {
+                
                 $errors = $validation->errors();
                 $errorMessages = '';
                 foreach ($errors->all() as $message) {
