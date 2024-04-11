@@ -94,7 +94,7 @@ class ProductController extends Controller
             $product = Product::findorFail($id);
             $requestData = $request->all();
             $dateUpdate = now();
-            
+
             $requestData['dateUpdate'] = $dateUpdate;
 
             $product->update($requestData);
@@ -107,5 +107,20 @@ class ProductController extends Controller
             return $error;
            
         }
+    }
+
+    public function delete($id)
+    {
+        try{
+            $product = Product::findOrFail($id);
+            $product->delete();
+            return redirect()->route('product.index');
+
+        } catch(\Illuminate\Database\QueryException $ex){
+            $error= "Une erreur inattendue s'est produite lors de la suppression." ;
+            \Log::error($ex->getMessage());
+            return $error;
+        }
+
     }
 }
