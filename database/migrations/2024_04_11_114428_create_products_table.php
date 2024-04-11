@@ -17,6 +17,8 @@ class CreateProductsTable extends Migration
             $table->id();
             $table->string('name',255);
             $table->float('priceHt');
+            $table->datetime('creationDate');
+            $table->datetime('dateUpdate')->nullable();
             $table->timestamps();
         });
     }
