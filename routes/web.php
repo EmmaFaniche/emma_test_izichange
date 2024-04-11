@@ -24,4 +24,8 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 
 ///////// Product //////////////
 Route::get('/product',[ProductController::class,'index'])->name('product.index');
+Route::get('/product/new',[ProductController::class,'new'])->name('product.new');
+Route::post('/product/store',[ProductController::class,'store'])->name('product.store');
+Route::get('/product/edit/{id}',[ProductController::class,'edit'])->name('product.edit');
+
 
