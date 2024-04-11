@@ -11,5 +11,5 @@ class Product extends Model
 
     public $timestamps = false;
 
-    protected $fillable =['name','priceHt','creationDate'];
+    protected $fillable =['name','priceHt','creationDate','dateUpdate'];
 }

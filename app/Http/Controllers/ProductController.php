@@ -61,7 +61,48 @@ class ProductController extends Controller
         }
         catch(\Illuminate\Database\QueryException $ex){
             $error= "Une erreur inattendue s'est produite lors de l'enregistrement." ;
-            dd($ex);
+            \Log::error($ex->getMessage());
+            return $error;
+           
+        }
+    }
+
+    public function edit($id)
+    {
+        $product = Product::findorFail($id);
+        return view('templates.product.edit', compact('product'));
+        
+    }
+
+    public function update(Request $request, $id)
+    {
+        try
+        {
+
+            $validation=Validator::make($request->all(),[
+            'name' => 'required|string|max:255',
+            'priceHt' => 'required|numeric',
+            ]);
+
+            if($validation->fails())
+            {
+                $errors = $validation->errors();
+
+                return back()->with('error', $errors)->withInput();
+            }
+
+            $product = Product::findorFail($id);
+            $requestData = $request->all();
+            $dateUpdate = now();
+            
+            $requestData['dateUpdate'] = $dateUpdate;
+
+            $product->update($requestData);
+
+            return redirect()->route('product.index');
+        }
+        catch(\Illuminate\Database\QueryException $ex){
+            $error= "Une erreur inattendue s'est produite lors de l'enregistrement." ;
             \Log::error($ex->getMessage());
             return $error;
            
